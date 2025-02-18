@@ -50,8 +50,8 @@ Not: Bu adımda hata alıyorsanız bir sonraki adımı da uygulayabilirsiniz.
 
 1. Uygulama açıldığında otomatik olarak **`default.csv`** dosyasından varsayılan ders bilgilerini yükler.
 2. Derslerin **AKTS değerlerini** ve **notlarını** girin veya düzenleyin.
-3. **"CSV Dosyası Yükle"** düğmesine tıklayarak kendi özel dosyanızı yükleyin.
-4. **"CSV Olarak Kaydet"** düğmesi ile düzenlediğiniz verileri yeni bir CSV dosyasına kaydedebilirsiniz.
+3. **"CSV Olarak Kaydet"** düğmesi ile her senaryonuzu yeni bir CSV dosyasına kaydedebilirsiniz.
+4. **"CSV Dosyası Yükle"** düğmesine tıklayarak daha önceden kaydettiğiniz çeşitli senaryolardan birini yükleyin.
 5. Arayüzde görünen **"Dönem Ortalaması"** ve **"Genel Ortalama"** değerleri anında güncellenir.
 
 📌 *Kolay kullanım için sade ve şık bir grafik arayüzü (GUI) sağlanmıştır!*
