@@ -58,43 +58,27 @@ Not: Bu adımda hata alıyorsanız bir sonraki adımı da uygulayabilirsiniz.
 
 ---
 
-## 📝 Ders Listesini Düzenleme
+## ✏️ Ders Ekleme ve Silme (v1.1.0 ve sonrası)
 
-Varsayılan ders listesini kendi ihtiyaçlarınıza göre düzenlemek için:
+Artık derslerinizi doğrudan uygulama üzerinden kolayca ekleyebilir ve silebilirsiniz!
 
-1. **`default.csv`** dosyasını herhangi bir metin editörü (Not Defteri, VS Code vb.) veya Excel ile açın.
-2. CSV dosyasının formatı aşağıdaki gibidir:
-   ```csv
-   semester,code,name,akts,grade
-   1. Sınıf Güz,MAT101,Matematik I,6,
-   ```
-   Her satır bir dersi temsil eder ve virgüllerle ayrılmış 5 alan içerir:
-   - **semester**: Dönem adı (örn: "1. Sınıf Güz", "2. Sınıf Bahar")
-   - **code**: Ders kodu (örn: "MAT101", "FIZ102")
-   - **name**: Dersin tam adı
-   - **akts**: Dersin AKTS değeri
-   - **grade**: Harf notu (boş bırakılabilir)
+### Yeni Ders Eklemek İçin:
+1. Pencerenin altındaki "Yeni Ders Ekle" butonuna tıklayın
+2. Açılan pencerede:
+   - Dönem seçin (örn: "1. Sınıf Güz")
+   - Ders kodunu girin (örn: "MAT101")
+   - Dersin adını yazın (örn: "Matematik I")
+   - AKTS değerini girin (örn: "6")
+3. "Kaydet" butonuna basın
+4. Yeni ders listeye eklenecektir
 
-3. **Yeni Ders Eklemek İçin:**
-   - Yeni bir satır ekleyin
-   - Yukarıdaki formata uygun şekilde dersin bilgilerini girin
-   - Harf notunu başlangıçta boş bırakabilirsiniz
+### Ders Silmek İçin:
+1. Pencerenin altındaki "Ders Sil" butonuna tıklayın
+2. Açılan pencerede silmek istediğiniz dersi seçin
+3. "Sil" butonuna tıklayın
+4. Ders listeden kaldırılacaktır
 
-4. **Ders Silmek İçin:**
-   - Silmek istediğiniz dersin satırını tamamen silin
-
-5. **Önemli Notlar:**
-   - Virgülleri ve sütun sırasını bozmamaya dikkat edin
-   - Dosyanın ilk satırını (`semester,code,name,akts,grade`) silmeyin
-   - Her dersin AKTS değerini sayı olarak girin
-   - Dönem adlarını tutarlı bir şekilde yazın (örn: hep "1. Sınıf Güz" formatında)
-
-6. **Değişiklikleri Kaydetme:**
-   - Düzenlemeleri bitirdikten sonra dosyayı kaydedin
-   - Dosya formatının "CSV" olarak kaldığından emin olun
-   - Uygulamayı yeniden başlattığınızda yeni ders listeniz yüklenecektir
-
-> 💡 **İpucu**: Yaptığınız değişikliklerden memnun kalmazsanız, GitHub'dan orijinal `default.csv` dosyasını tekrar indirebilirsiniz.
+> 💡 **İpucu**: Yaptığınız değişiklikleri kalıcı olarak saklamak için "CSV Olarak Kaydet" butonunu kullanmayı unutmayın!
 
 ---
 

@@ -8,6 +8,140 @@ from gpa_calculator.data_manager import (
 from gpa_calculator.calculations import (
     calculate_semester_gpa, calculate_cumulative_gpa
 )
+class RemoveCourseDialog(customtkinter.CTkToplevel):
+    def __init__(self, parent):
+        super().__init__(parent)
+        self.title("Ders Sil")
+        self.geometry("500x400")
+
+        # Dialog penceresini en öne getir
+        self.lift()  # Pencereyi öne getirir
+        self.focus_force()  # Klavye odağını zorla bu pencereye verir
+        self.grab_set()  # Modal pencere yapar (ana pencereyle etkileşimi engeller)
+        
+        # Başlık
+        self.title_label = customtkinter.CTkLabel(
+            self, 
+            text="Silmek İstediğiniz Dersi Seçin:",
+            font=customtkinter.CTkFont(size=16, weight="bold")
+        )
+        self.title_label.grid(row=0, column=0, columnspan=2, pady=10)
+        
+        # Ders listesi için scrollable frame
+        self.course_frame = customtkinter.CTkScrollableFrame(self)
+        self.course_frame.grid(row=1, column=0, columnspan=2, padx=10, pady=10, sticky="nsew")
+        self.grid_rowconfigure(1, weight=1)
+        self.grid_columnconfigure(0, weight=1)
+        
+        # Dersleri listele
+        self.course_buttons = []
+        for sem_data in parent.semesters_data:
+            # Dönem başlığı
+            semester_label = customtkinter.CTkLabel(
+                self.course_frame,
+                text=sem_data['semester'],
+                font=customtkinter.CTkFont(weight="bold")
+            )
+            semester_label.pack(pady=(10,5), anchor="w")
+            
+            # Dönemdeki dersler
+            for course in sem_data['courses']:
+                course_text = f"{course['code']} - {course['name']} ({course['akts']} AKTS)"
+                course_button = customtkinter.CTkButton(
+                    self.course_frame,
+                    text=course_text,
+                    command=lambda s=sem_data['semester'], c=course['code']: self.delete_course(s, c)
+                )
+                course_button.pack(pady=2, fill="x")
+                self.course_buttons.append(course_button)
+        
+        self.parent = parent
+    
+    def delete_course(self, semester, code):
+        if tkinter.messagebox.askyesno("Onay", "Bu dersi silmek istediğinizden emin misiniz?"):
+            self.parent.remove_course(semester, code)
+            self.parent.calculate_all_gpa()  # Ana penceredeki hesaplamaları güncelle
+            self.destroy()
+
+
+
+class AddCourseDialog(customtkinter.CTkToplevel):
+    def __init__(self, parent):
+        super().__init__(parent)
+        self.title("Yeni Ders Ekle")
+        self.geometry("400x300")
+        
+        # Dialog penceresini en öne getir
+        self.lift()  # Pencereyi öne getirir
+        self.focus_force()  # Klavye odağını zorla bu pencereye verir
+        self.grab_set()  # Modal pencere yapar (ana pencereyle etkileşimi engeller)
+        
+        # Dönem seçimi
+        self.semester_label = customtkinter.CTkLabel(self, text="Dönem:")
+        self.semester_label.grid(row=0, column=0, padx=10, pady=5)
+        
+        # Dönem seçimi
+        self.semester_var = customtkinter.StringVar()
+        self.semester_combo = customtkinter.CTkComboBox(
+            self,
+            values=[
+                "1. Sınıf Güz", 
+                "1. Sınıf Bahar", 
+                "2. Sınıf Güz", 
+                "2. Sınıf Bahar",
+                "3. Sınıf Güz",
+                "3. Sınıf Bahar",
+                "4. Sınıf Güz",
+                "4. Sınıf Bahar"
+            ],
+            variable=self.semester_var
+        )
+        self.semester_combo.grid(row=0, column=1, padx=10, pady=5)
+        
+        # Ders kodu girişi
+        self.code_label = customtkinter.CTkLabel(self, text="Ders Kodu:")
+        self.code_label.grid(row=1, column=0, padx=10, pady=5)
+        self.code_entry = customtkinter.CTkEntry(self, placeholder_text="Ders Kodu")
+        self.code_entry.grid(row=1, column=1, padx=10, pady=5)
+        
+        # Ders adı girişi
+        self.name_label = customtkinter.CTkLabel(self, text="Ders Adı:")
+        self.name_label.grid(row=2, column=0, padx=10, pady=5)
+        self.name_entry = customtkinter.CTkEntry(self, placeholder_text="Ders Adı")
+        self.name_entry.grid(row=2, column=1, padx=10, pady=5)
+        
+        # AKTS girişi
+        self.akts_label = customtkinter.CTkLabel(self, text="AKTS:")
+        self.akts_label.grid(row=3, column=0, padx=10, pady=5)
+        self.akts_entry = customtkinter.CTkEntry(self, placeholder_text="AKTS")
+        self.akts_entry.grid(row=3, column=1, padx=10, pady=5)
+        
+        # Kaydet butonu
+        self.save_button = customtkinter.CTkButton(
+            self,
+            text="Kaydet",
+            command=self.save_course
+        )
+        self.save_button.grid(row=4, column=0, columnspan=2, pady=20)
+        
+        self.parent = parent
+        
+    def save_course(self):
+        try:
+            semester = self.semester_var.get()
+            code = self.code_entry.get()
+            name = self.name_entry.get()
+            akts = int(self.akts_entry.get())
+            
+            if not all([semester, code, name, akts]):
+                tkinter.messagebox.showerror("Hata", "Lütfen tüm alanları doldurun!")
+                return
+                
+            self.parent.add_course(semester, code, name, akts)
+            self.destroy()
+            
+        except ValueError:
+            tkinter.messagebox.showerror("Hata", "AKTS değeri sayı olmalıdır!")
 
 class GPACalculatorApp(customtkinter.CTk):
     """
@@ -18,7 +152,8 @@ class GPACalculatorApp(customtkinter.CTk):
         Uygulama başlatıldığında çalışacak fonksiyon.
         """
         super().__init__()
-        self.semesters_data = load_data_csv("default.csv", get_courses_data)
+        self.current_file = "default.csv"  # Mevcut dosya yolunu tut
+        self.semesters_data = load_data_csv(self.current_file, get_courses_data)
 
         self.title("GPA Hesaplama Uygulaması")
         self.geometry("800x600")
@@ -42,6 +177,7 @@ class GPACalculatorApp(customtkinter.CTk):
 
         self.create_ui()
         self.create_fixed_ui()
+        self.create_management_buttons()  # new
         self.create_upload_button()
         self.calculate_all_gpa()
 
@@ -154,6 +290,7 @@ class GPACalculatorApp(customtkinter.CTk):
             try:
                 self.semesters_data = get_courses_data()  # Varsayılan veriye sıfırla
                 self.semesters_data = load_data_csv(file_path, get_courses_data)
+                self.current_file = file_path  # Mevcut dosya yolunu güncelle
                 self.recreate_ui()
                 self.calculate_all_gpa()
                 print(f"CSV dosyasından veriler yüklendi: {file_path}")
@@ -178,7 +315,7 @@ class GPACalculatorApp(customtkinter.CTk):
         CSV dosyasını kaydetme işlemini başlatır.
         """
         ask_save_csv(self.semesters_data)
-
+        
     def recreate_ui(self):
         """
         Arayüzü yeniden oluşturur.
@@ -227,7 +364,68 @@ class GPACalculatorApp(customtkinter.CTk):
                 self.cumulative_akts_labels[i].configure(text=f"Alınan Toplam AKTS: {cumulative_up_to_semester_akts}")
 
         self.overall_gpa_label.configure(text=f"Toplam Genel Ortalama: {cumulative_gpa:.4f}")
+        
+    def create_management_buttons(self):
+        button_frame = customtkinter.CTkFrame(self, fg_color="transparent")  # Arka plan rengini kaldır
+        button_frame.grid(row=3, column=0, columnspan=2, padx=10, pady=5, sticky="ew")
+        
+        # Grid yapılandırması - iki eşit sütun
+        button_frame.grid_columnconfigure(0, weight=1)
+        button_frame.grid_columnconfigure(1, weight=1)
+        
+        # Ders Ekle butonu - sol yarı
+        add_course_button = customtkinter.CTkButton(
+            button_frame, 
+            text="Yeni Ders Ekle", 
+            command=self.show_add_course_dialog
+        )
+        add_course_button.grid(row=0, column=0, padx=5, pady=5, sticky="ew")
+        
+        # Ders Sil butonu - sağ yarı
+        remove_course_button = customtkinter.CTkButton(
+            button_frame, 
+            text="Ders Sil", 
+            command=self.show_remove_course_dialog
+        )
+        remove_course_button.grid(row=0, column=1, padx=5, pady=5, sticky="ew")
 
+    def show_add_course_dialog(self):
+        dialog = AddCourseDialog(self)
+        self.wait_window(dialog)
+        self.recreate_ui()
+
+    def add_course(self, semester, code, name, akts):
+        for sem_data in self.semesters_data:
+            if sem_data["semester"] == semester:
+                sem_data["courses"].append({
+                    "code": code,
+                    "name": name,
+                    "akts": int(akts),
+                    "grade": ""
+                })
+                break
+        self.calculate_all_gpa()
+
+
+    def show_remove_course_dialog(self):
+        if not any(sem_data['courses'] for sem_data in self.semesters_data):
+            tkinter.messagebox.showinfo("Bilgi", "Silinecek ders bulunamadı!")
+            return
+        
+        dialog = RemoveCourseDialog(self)
+        self.wait_window(dialog)
+        self.recreate_ui()
+
+    def remove_course(self, semester, code):
+        for sem_data in self.semesters_data:
+            if sem_data["semester"] == semester:
+                sem_data["courses"] = [
+                    course for course in sem_data["courses"] 
+                    if course["code"] != code
+                ]
+                break
+        self.calculate_all_gpa()
+            
     def on_mousewheel(self, event):
         """
         Fare tekerleği ile kaydırma olayını yönetir.
