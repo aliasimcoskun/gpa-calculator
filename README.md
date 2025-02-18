@@ -18,7 +18,8 @@ Bu uygulamayı Python veya herhangi başka bir kurulum gerekmeden kolayca kullan
 
 > Eğer uygulama `default.csv` dosyasını göremezse, hatalı veya eksik veri yüklenebilir. Bu yüzden `main.exe` ile `default.csv` dosyasının aynı dizinde olduğundan emin olun.
 
-## 🚀 Nasıl Kurulur? (Windows .exe'yi kurmanıza izin vermiyorsa bu yöntemi deneyebilirsiniz.)
+## 🚀 Nasıl Kurulur?
+### Bir önceki adımdaki main.exe dosyasını indiremiyorsanız bu yöntemi deneyebilirsiniz.
 
 1. Bilgisayarınızda **Python** kurulu olduğundan emin olun.
 2. Projeyi indirdikten sonra **`main.py`** dosyasının bulunduğu klasöre gidin.
