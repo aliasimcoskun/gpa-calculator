@@ -4,6 +4,20 @@ Bu proje, üniversite derslerinin notlarını girerek dönemlik ve kümülatif o
 
 ---
 
+## 🚀 Uygulamayı `.exe` Dosyasıyla Kullanma (En Basit Yöntem!)
+
+Bu uygulamayı Python veya herhangi başka bir kurulum gerekmeden kolayca kullanmak için:
+
+1. GitHub **Releases** sekmesine gidin ve en güncel sürümün zip dosyasını (örnek: `gpa_calculator_v1.x.x.zip`) indirin.
+2. İndirdiğiniz zip arşivini açın. İçerisinde iki dosya bulacaksınız:  
+   - **`main.exe`**  
+   - **`default.csv`**  
+3. Bu iki dosyayı mutlaka **aynı klasör** içinde tutun. (Örneğin masaüstüne bir `GPA-Calculator` klasörü oluşturup ikisini oraya kopyalayın.)
+4. **`main.exe`** dosyasını çalıştırın (çift tıklayın).  
+5. Uygulamada listelenen derslerinizi düzenleyebilir, yeni notlar girebilir veya verilerinizi CSV olarak kaydedebilirsiniz.
+
+> Eğer uygulama `default.csv` dosyasını göremezse, hatalı veya eksik veri yüklenebilir. Bu yüzden `main.exe` ile `default.csv` dosyasının aynı dizinde olduğundan emin olun.
+
 ## 🚀 Nasıl Kurulur?
 
 1. Bilgisayarınızda **Python** kurulu olduğundan emin olun.
