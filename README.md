@@ -44,9 +44,9 @@ Bu proje, üniversite derslerinin notlarını girerek dönemlik ve kümülatif o
 
 ## 📸 Ekran Görüntüsü Örneği
 
-Aşağıdaki örnek, uygulamanın görünümü hakkında fikir verebilir (temsilî):
+Aşağıdaki uygulamadan bir örnek bulunur:
 
-<img alt="GPA Calculator UI" src="https://via.placeholder.com/800x400.png?text=GPA+Calculator+UI">
+![Ekran Görüntüsü](/images/screenshot.png)
 
 ---
 
