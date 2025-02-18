@@ -58,6 +58,46 @@ Not: Bu adımda hata alıyorsanız bir sonraki adımı da uygulayabilirsiniz.
 
 ---
 
+## 📝 Ders Listesini Düzenleme
+
+Varsayılan ders listesini kendi ihtiyaçlarınıza göre düzenlemek için:
+
+1. **`default.csv`** dosyasını herhangi bir metin editörü (Not Defteri, VS Code vb.) veya Excel ile açın.
+2. CSV dosyasının formatı aşağıdaki gibidir:
+   ```csv
+   semester,code,name,akts,grade
+   1. Sınıf Güz,MAT101,Matematik I,6,
+   ```
+   Her satır bir dersi temsil eder ve virgüllerle ayrılmış 5 alan içerir:
+   - **semester**: Dönem adı (örn: "1. Sınıf Güz", "2. Sınıf Bahar")
+   - **code**: Ders kodu (örn: "MAT101", "FIZ102")
+   - **name**: Dersin tam adı
+   - **akts**: Dersin AKTS değeri
+   - **grade**: Harf notu (boş bırakılabilir)
+
+3. **Yeni Ders Eklemek İçin:**
+   - Yeni bir satır ekleyin
+   - Yukarıdaki formata uygun şekilde dersin bilgilerini girin
+   - Harf notunu başlangıçta boş bırakabilirsiniz
+
+4. **Ders Silmek İçin:**
+   - Silmek istediğiniz dersin satırını tamamen silin
+
+5. **Önemli Notlar:**
+   - Virgülleri ve sütun sırasını bozmamaya dikkat edin
+   - Dosyanın ilk satırını (`semester,code,name,akts,grade`) silmeyin
+   - Her dersin AKTS değerini sayı olarak girin
+   - Dönem adlarını tutarlı bir şekilde yazın (örn: hep "1. Sınıf Güz" formatında)
+
+6. **Değişiklikleri Kaydetme:**
+   - Düzenlemeleri bitirdikten sonra dosyayı kaydedin
+   - Dosya formatının "CSV" olarak kaldığından emin olun
+   - Uygulamayı yeniden başlattığınızda yeni ders listeniz yüklenecektir
+
+> 💡 **İpucu**: Yaptığınız değişikliklerden memnun kalmazsanız, GitHub'dan orijinal `default.csv` dosyasını tekrar indirebilirsiniz.
+
+---
+
 ## 📸 Ekran Görüntüsü Örneği
 
 Aşağıdaki uygulamadan bir örnek bulunur:
